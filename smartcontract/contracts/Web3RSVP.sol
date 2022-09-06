@@ -9,7 +9,8 @@ contract Web3RSVP {
         uint256 eventTimestamp,
         uint256 maxCapacity,
         uint256 deposit,
-        string eventDataCID
+        string eventDataCID,
+        bytes32 specialGuest
     );
 
     event NewRSVP(bytes32 eventID, address attendeeAddress);
@@ -28,6 +29,7 @@ contract Web3RSVP {
         address[] confirmedRSVPs;
         address[] claimedRSVPs;
         bool paidOut;
+        bytes32 specialGuest;
     }
 
     mapping(bytes32 => CreateEvent) public idToEvent;
@@ -36,7 +38,8 @@ contract Web3RSVP {
         uint256 eventTimestamp,
         uint256 deposit,
         uint256 maxCapacity,
-        string calldata eventDataCID
+        string calldata eventDataCID,
+        bytes32 specialGuest
         ) external {
         // generate an eventID based on other things passed in to generate a hash
         bytes32 eventId = keccak256(
@@ -65,7 +68,8 @@ contract Web3RSVP {
             maxCapacity,
             confirmedRSVPs,
             claimedRSVPs,
-            false
+            false,
+            specialGuest
         );
 
         emit NewEventCreated(
@@ -74,7 +78,8 @@ contract Web3RSVP {
             eventTimestamp,
             maxCapacity,
             deposit,
-            eventDataCID
+            eventDataCID,
+            specialGuest
         );
     }
 

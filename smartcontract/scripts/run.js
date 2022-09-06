@@ -1,3 +1,7 @@
+const { ethers } = require("hardhat");
+// for string converting to use as byte32
+const utils = ethers.utils
+
 const hre = require("hardhat");
 
 const main = async () => {
@@ -13,12 +17,15 @@ const main = async () => {
     let timestamp = 1718926200;
     let eventDataCID =
     "bafybeibhwfzx6oo5rymsxmkdxpmkfwyvbjrrwcl7cekmbzlupmp5ypkyfi";
+    let specialGuestInBytes = utils.formatBytes32String("Vitalik");
+
 
     let txn = await rsvpContract.createNewEvent(
         timestamp,
         deposit,
         maxCapacity,
-        eventDataCID
+        eventDataCID,
+        specialGuestInBytes
       );
       let wait = await txn.wait();
       console.log("NEW EVENT CREATED:", wait.events[0].event, wait.events[0].args);
